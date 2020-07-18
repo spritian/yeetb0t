@@ -6,7 +6,7 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  const mp3s = ['crumbled', 'eating', 'fail', 'fuckyou', 'listen', 'lol', 'm995', 'yea', 'opatski', 'scav', 'nicework', 'youregood', 'dn', 'troll1', 'soon', 'feature', 'greeting', 'annoying', 'invite1', 'labs', 'labs-cargo', 'labs-hangar', 'labs-main', 'labs-med', 'labs-parking', 'died', 'nade', 'shh', 'run', 'semantics'];
+  const mp3s = ['crumbled', 'eating', 'fail', 'fuckyou', 'listen', 'lol', 'm995', 'yea', 'opatski', 'scav', 'nicework', 'youregood', 'dn', 'troll1', 'soon', 'feature', 'greeting', 'annoying', 'invite1', 'labs', 'labs-cargo', 'labs-hangar', 'labs-main', 'labs-med', 'labs-parking', 'died', 'nade', 'shh', 'run', 'semantics', 'ohyouredead', 'lol2', 'lol3'];
   
   if (mp3s.includes(msg.content)) {
     console.log("Found in array?: " + mp3s.includes(msg.content));
