@@ -9,24 +9,25 @@ const fs = require('fs');
 fs.readdir(mp3folder, (err, files) => {
   files.forEach(file => {
     var f=file.split('.').slice(0, -1).join('.')
-    mp3s.push(f);
 
     const regex = /usec3/g;
     const found = f.match(regex);
     if (found) {
       mp3srandom.push(f);
+    } else {
+      mp3s.push(f);
     }
   });
 });
 
 setInterval(function() {
   processreq('random-auto');
-}, 300000);
+}, 120000);
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  console.log(mp3s);
   console.log(mp3srandom);
+  console.log(mp3s);
 });
 
 client.on('message', processreq);

@@ -5,4 +5,4 @@
 - Send it a direct message with any of the mp3 names and it'll play the mp3 as if it were a user speaking!
 - Send 'random' to the bot to randomly play an mp3!
 - Send '?' to the bot to get a list of all supported commands!
-- Every 5 mins it will automatically pick a usec3 voice command and speak!
+- Every 2 mins it will automatically pick a usec3 voice command and speak!
