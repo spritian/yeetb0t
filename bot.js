@@ -3,19 +3,21 @@ const client = new Discord.Client();
 
 const mp3folder = '/root/discord/mp3/';
 const mp3s = [];
+const mp3sdisp = [];
 const mp3srandom = [];
 const fs = require('fs');
 
 fs.readdir(mp3folder, (err, files) => {
   files.forEach(file => {
     var f=file.split('.').slice(0, -1).join('.')
+    mp3s.push(f);
 
     const regex = /usec3/g;
     const found = f.match(regex);
     if (found) {
       mp3srandom.push(f);
     } else {
-      mp3s.push(f);
+      mp3sdisp.push(f);
     }
   });
 });
@@ -40,7 +42,7 @@ function processreq(msg) {
   }
 
   if (item == "?") {
-    msg.reply(mp3s);
+    msg.reply(mp3sdisp);
   }
 
   if (item == "random" && msg != "random-auto") {
