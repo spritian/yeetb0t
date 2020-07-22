@@ -1,13 +1,33 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+const mp3folder = '/root/discord/mp3/';
+const mp3s = [];
+const fs = require('fs');
+
+fs.readdir(mp3folder, (err, files) => {
+  files.forEach(file => {
+    var f=file.split('.').slice(0, -1).join('.')
+    mp3s.push(f);
+  });
+});
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  console.log(mp3s);
 });
 
 client.on('message', msg => {
-  const mp3s = ['crumbled', 'eating', 'fail', 'fuckyou', 'listen', 'lol', 'm995', 'yea', 'opatski', 'scav', 'nicework', 'youregood', 'dn', 'troll1', 'soon', 'feature', 'greeting', 'annoying', 'invite1', 'labs', 'labs-cargo', 'labs-hangar', 'labs-main', 'labs-med', 'labs-parking', 'died', 'nade', 'shh', 'run', 'semantics', 'ohyouredead', 'lol2', 'lol3'];
-  
+  if (msg.content == "?") {
+    msg.reply(mp3s);
+  }
+
+  if (msg.content == "random") {
+    var random = mp3s[Math.floor(Math.random() * mp3s.length)];
+    msg.content = random;
+    console.log("Received random request... and the winner is: " + random);
+  }
+
   if (mp3s.includes(msg.content)) {
     console.log("Found in array?: " + mp3s.includes(msg.content));
     msg.reply('Roger that!');
@@ -57,4 +77,3 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 });
 
 client.login('YOURTOKEN');
-
