@@ -104,11 +104,6 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 	var action = "greeting";
     }
 
-
-    console.log("new:"+newState.selfMute);
-    console.log("old:"+oldState.selfMute);
-
-
     channel.join().then(connection => {
        if (action) {
           console.log("Joining!");
