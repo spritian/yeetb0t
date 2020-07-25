@@ -88,7 +88,9 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     const channel = client.channels.cache.get("650957018877788180");
    
     // if someone stops streaming, play action 
-    if (newState.streaming == false && oldState.streaming == true) {
+    if (newState.streaming == true && oldState.streaming == false) {
+	var action = "usec3_goodwork_06_bl";
+    } else if (newState.streaming == false && oldState.streaming == true) {
 	var action = "stream";
     }
 
