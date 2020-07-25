@@ -12,19 +12,19 @@ fs.readdir(mp3folder, (err, files) => {
     var f=file.split('.').slice(0, -1).join('.')
     mp3s.push(f);
 
-    const regex = /usec3/g;
-    const found = f.match(regex);
-    if (found) {
+    //const regex = /usec3/g;
+    //const found = f.match(regex);
+    //if (found) {
       mp3srandom.push(f);
-    } else {
+    //} else {
       mp3sdisp.push(f);
-    }
+    //}
   });
 });
 
 setInterval(function() {
   processreq('random-auto');
-}, 120000);
+}, 300000);
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -86,20 +86,44 @@ function processreq(msg) {
 client.on('voiceStateUpdate', (oldState, newState) => {
   if (newState.channelID == "650957018877788180") {
     const channel = client.channels.cache.get("650957018877788180");
+   
+    // if someone stops streaming, play action 
+    if (newState.streaming == false && oldState.streaming == true) {
+	var action = "stream";
+    }
+
+    // if someone mutes
+    if (newState.selfMute == true && oldState.selfMute == false) {
+	var action = "fuckyou";
+    } else if (newState.selfMute == false && oldState.selfMute == true) {
+	var action = "greeting";    
+    }
+
+    // someone joins the channel
+    if (newState.channel != oldState.channel) {
+	var action = "greeting";
+    }
+
+
+    console.log("new:"+newState.selfMute);
+    console.log("old:"+oldState.selfMute);
+
 
     channel.join().then(connection => {
-       console.log("Joining!");
-       const dispatcher = connection.play('/root/discord/mp3/greeting.mp3');
-       dispatcher.on('start', () => {
-          console.log('Greeting is playing!');
-       });
+       if (action) {
+          console.log("Joining!");
+          const dispatcher = connection.play('/root/discord/mp3/' + action + '.mp3');
+          dispatcher.on('start', () => {
+             console.log('VoiceUpdate ' + action + ' is playing!');
+          });
 
-       dispatcher.on('finish', () => {
-          console.log('Greeting ended!');
-          //channel.leave();
-       });
+          dispatcher.on('finish', () => {
+             console.log('VoiceUpdate action ended!');
+             //channel.leave();
+          });
 
-       dispatcher.on('error', console.error);
+          dispatcher.on('error', console.error);
+       }
     }).catch(e => {
        console.error(e);
     });
